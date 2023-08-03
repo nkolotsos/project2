@@ -1,6 +1,7 @@
 <%- include('../partials/header') %>
 
 <section id="show-page">
+  <div><img class="boardgame-image" src="<%= boardgame.image %>" alt="boardgame-image"></div>
   <div>Name: </div>
   <div><%= boardgame.name %></div>
   <div>Year Published: </div>
@@ -16,7 +17,7 @@
 </section>
 
 <hr>
-
+<br><br><h2>Reviews</h2>
 <% if (boardgame.reviews.length) { %>
   <table>
     <thead>
@@ -25,6 +26,7 @@
         <th>Review</th>
         <th>Rating</th>
         <th>Date</th>
+        <th></th>
         <th></th>
       </tr>
     </thead>
@@ -44,6 +46,13 @@
               </form>
             <% } %>
           </td>
+          <td>
+            <% if (user?._id.equals(r.user)) { %>
+              <form action="/reviews/<%= r._id %>?_method=DELETE" method="POST">
+                <button type="submit">&#9998;</button>
+              </form>
+            <% } %>
+          </td>
         </tr>
       <% }); %>
       <tr>
@@ -58,7 +67,6 @@
 
 <hr>
 
-<br><br><h2>Reviews</h2>
 <% if (user) { %>
   <form id="add-review-form" method="POST"
     action="/boardgames/<%= boardgame._id %>/reviews">
@@ -74,9 +82,10 @@
     </select>
     <input type="submit" value="Add Review">
   </form>
+  <hr>
 <% } %>
 
-<hr>
+
 
 <h2>Listings</h2>
 <% if (listing.length) { %>

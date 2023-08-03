@@ -24,6 +24,10 @@ const reviewSchema = new Schema({
 });
 
 const boardgameSchema = new Schema({
+    bgId: {
+      type: String,
+      required: true
+    },
     name: { 
       type: String, 
       required: true 

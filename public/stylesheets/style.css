@@ -188,3 +188,8 @@ hr {
   border-radius: 50%;
   height: 40px;
 }
+
+.boardgame-image {
+  height: 200px;
+  width: 200px;
+}

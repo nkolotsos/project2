@@ -7,13 +7,19 @@ function newBoardgame(req, res) {
 
 async function create(req, res) {
     try {
+      const existingBoardgame = await Boardgame.findOne({ name: req.body.name });
+      if (existingBoardgame) {
+        // Boardgame already exists
+        return res.render('boardgames/new', { title: "New Board Game", errorMsg: "Boardgame already exists" });
+      }
+  
       const boardgame = await Boardgame.create(req.body);
       res.redirect(`boardgames/${boardgame._id}`);
     } catch (err) {
       console.log(err);
       res.render('boardgames/new', { title: "New Board Game", errorMsg: err.message });
     }
-}
+  }
 
 async function index(req, res) {
     const boardgames = await Boardgame.find({});
