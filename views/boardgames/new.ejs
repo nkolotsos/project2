@@ -1,0 +1,15 @@
+<%- include('../partials/header') %>
+
+<h2>Enter a New Board Game</h2>
+<form action="/boardgames" method="POST">
+  <label>Name:
+    <input type="text" name="name">
+  </label><br>
+  <label>Year Published:
+    <input type="number" name="yearpublished">
+  </label><br>
+  <button type="submit">Add Board Game</button>
+</form>
+<p><%= errorMsg %></p>
+
+<%- include('../partials/footer') %>
