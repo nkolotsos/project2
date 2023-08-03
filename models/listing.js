@@ -22,6 +22,10 @@ const listingSchema = new Schema({
     dateListed: {
         type: Date,
         default: Date.now
+    },
+    boardgame: {
+        type: Schema.Types.ObjectId,
+        ref: 'Boardgame'
     }
 }, {
     timestamps: true

@@ -7,13 +7,18 @@ async function newListing(req, res) {
 }
 
 async function create(req, res) {
-  req.body.boardgame = req.params.id;
-  await Listing.create(req.body);
-  res.redirect(`/boardgames/${req.params.id}`);
+  try {
+    req.body.boardgame = req.params.id;
+    const listing = await Listing.create(req.body);
+    console.log("New Listing:", listing);
+    res.redirect(`/boardgames/${req.params.id}`);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
 }
 
 module.exports = {
     new: newListing,
     create
 };
-

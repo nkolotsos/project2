@@ -3,7 +3,7 @@
 <h2>Enter a New Listing</h2>
 <form action="/boardgames" method="POST">
   <label>Name:
-    <input type="text" name="name">
+    <input type="text" name="name" value="<%= boardgame ? boardgame.name : '' %>">
   </label><br>
   <label>Price:
     <input type="number" name="price">
