@@ -1,4 +1,5 @@
 const Boardgame = require('../models/boardgame');
+const Listing = require('../models/listing');
 
 function newBoardgame(req, res) {
     res.render("boardgames/new", { title: "New Board Game", errorMsg: "" });
@@ -6,8 +7,8 @@ function newBoardgame(req, res) {
 
 async function create(req, res) {
     try {
-      await Boardgame.create(req.body);
-      res.redirect('/boardgames');
+      const boardgame = await Boardgame.create(req.body);
+      res.redirect(`boardgames/${boardgame._id}`);
     } catch (err) {
       console.log(err);
       res.render('boardgames/new', { title: "New Board Game", errorMsg: err.message });
@@ -21,7 +22,8 @@ async function index(req, res) {
 
 async function show(req, res) {
     const boardgame = await Boardgame.findById(req.params.id);
-    res.render('boardgames/show', { title: boardgame.name, boardgame });
+    const listing = await Listing.find({boardgame: boardgame._id});
+    res.render('boardgames/show', { title: boardgame.name, boardgame, listing });
 }
 
 module.exports = {

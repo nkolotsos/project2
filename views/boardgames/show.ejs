@@ -1,7 +1,7 @@
 <%- include('../partials/header') %>
 
 <section id="show-page">
-  <div>name: </div>
+  <div>Name: </div>
   <div><%= boardgame.name %></div>
   <div>Year Published: </div>
   <div><%= boardgame.yearpublished %></div>
@@ -14,6 +14,39 @@
   <div>Max Age: </div>
   <div><%= boardgame.maxAge %></div>
 </section>
+
+<hr>
+
+<% if (boardgame.reviews.length) { %>
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Review</th>
+        <th>Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% let totalRating = 0 %>
+      <% boardgame.reviews.forEach(function(r) { %>
+        <% totalRating += r.rating %>
+        <tr>
+          <td><%= r.createdAt.toLocaleDateString() %></td>
+          <td><%= r.content %></td>
+          <td><%= r.rating %></td>
+        </tr>
+      <% }); %>
+      <tr>
+        <td colspan="2"></td>
+        <td><strong><%= (totalRating / boardgame.reviews.length).toFixed(1) %></strong></td>
+      </tr>
+    </tbody>
+  </table>
+<% } else { %>
+  <h5>No Reviews Yet</h5>
+<% } %>
+
+<hr>
 
 <br><br><h2>Reviews</h2>
 <form id="add-review-form" method="POST"
@@ -31,27 +64,34 @@
   <input type="submit" value="Add Review">
 </form>
 
-<% if (boardgame.reviews.length) { %>
+<hr>
+
+<h2>Listings</h2>
+<% if (listing.length) { %>
   <table>
     <thead>
       <tr>
-        <th>Date</th>
-        <th>Review</th>
-        <th>Rating</th>
+        <th>Name:</th>
+        <th>Price:</th>
+        <th>Condition:</th>
+        <th>Date Listed:</th>
       </tr>
     </thead>
     <tbody>
-      <% boardgame.reviews.forEach(function(r) { %>
+      <% listing.forEach(function(l) { %>
         <tr>
-          <td><%= r.createdAt.toLocaleDateString() %></td>
-          <td><%= r.content %></td>
-          <td><%= r.rating %></td>
+          <td><%= l.name %></td>
+          <td><%= l.price %></td>
+          <td><%= l.condition %></td>
+          <td><%= l.dateListed %></td>
         </tr>
       <% }); %>
     </tbody>
   </table>
-<% } else { %>
-  <h5>No Reviews Yet</h5>
+<% } else { %> 
+  <h5>No Listings Yet</h5>
 <% } %>
+<a href="/boardgames/<%= boardgame.id %>/listings/new">Add New Listing</a>
+
 
 <%- include('../partials/footer') %>

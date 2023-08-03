@@ -1,0 +1,22 @@
+<%- include('../partials/header') %>
+
+<h2>Enter a New Listing</h2>
+<form action="/boardgames" method="POST">
+  <label>Name:
+    <input type="text" name="name">
+  </label><br>
+  <label>Price:
+    <input type="number" name="price">
+  </label><br>
+  <label>Condition:
+    <select name="condition">
+      <option value="New" selected>New</option>
+      <option value="Good">Good</option>
+      <option value="Used">Used</option>
+      <option value="Worn">Worn</option>
+    </select>
+  </label><br>
+  <button type="submit">Add New Listing</button>
+</form>
+
+<%- include('../partials/footer') %>
