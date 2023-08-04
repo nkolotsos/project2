@@ -3,6 +3,7 @@
 <table id="list">
   <thead>
     <tr>
+      <th></th>
       <th>Name</th>
       <th>Players</th>
       <th>Play Time</th>
@@ -12,6 +13,7 @@
   <tbody>
     <% boardgames.forEach(function(b) { %>
       <tr>
+        <td><img src="<%= b.image %>" alt="<%= b.name %>" class="index-img"></td>
         <td><%= b.name %></td>
         <td><%= `${b.minplayers}-${b.maxplayers}` %></td>
         <td><%= `${b.minplaytime}-${b.maxplaytime}` %></td>

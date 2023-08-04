@@ -52,7 +52,7 @@
           </td>
           <td>
             <% if (user?._id.equals(r.user)) { %>
-              <form action="/boardgames/<%= boardgame._id %>/reviews/<%= r._id %>" method="GET">
+              <form action="/reviews/<%= r._id %>/edit" method="GET">
                 <button type="submit">&#9998;</button>
               </form>
             <% } %>
