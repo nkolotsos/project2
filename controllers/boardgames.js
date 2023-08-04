@@ -4,7 +4,7 @@ const Listing = require('../models/listing');
 function newBoardgame(req, res) {
     res.render("boardgames/new", { title: "New Board Game", errorMsg: "" });
 }
-
+    
 async function create(req, res) {
     try {
       const existingBoardgame = await Boardgame.findOne({ name: req.body.name });
@@ -19,7 +19,7 @@ async function create(req, res) {
       console.log(err);
       res.render('boardgames/new', { title: "New Board Game", errorMsg: err.message });
     }
-  }
+}
 
 async function index(req, res) {
     const boardgames = await Boardgame.find({});

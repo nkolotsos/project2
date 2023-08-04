@@ -1,7 +1,7 @@
 <%- include('../partials/header') %>
 
 <section id="show-page">
-  <div><img class="boardgame-image" src="<%= boardgame.image %>" alt="boardgame-image"></div>
+  <div><img class="boardgame-image" src="<%= boardgame.image %>" alt=""></div><br>
   <div>Name: </div>
   <div><%= boardgame.name %></div>
   <div>Year Published: </div>
@@ -15,8 +15,12 @@
   <div>Max Age: </div>
   <div><%= boardgame.maxAge %></div>
 </section>
-
+<section id="show-page">
+  <div>Description:</div>
+  <div><%= boardgame.description %></div>
+</section>
 <hr>
+
 <br><br><h2>Reviews</h2>
 <% if (boardgame.reviews.length) { %>
   <table>
@@ -48,7 +52,7 @@
           </td>
           <td>
             <% if (user?._id.equals(r.user)) { %>
-              <form action="/reviews/<%= r._id %>?_method=DELETE" method="POST">
+              <form action="/boardgames/<%= boardgame._id %>/reviews/<%= r._id %>" method="GET">
                 <button type="submit">&#9998;</button>
               </form>
             <% } %>
@@ -68,8 +72,7 @@
 <hr>
 
 <% if (user) { %>
-  <form id="add-review-form" method="POST"
-    action="/boardgames/<%= boardgame._id %>/reviews">
+  <form id="add-review-form" method="POST" action="/boardgames/<%= boardgame._id %>/reviews">
     <label>Review:</label>
     <textarea name="content"></textarea>
     <label>Rating:</label>
@@ -96,6 +99,7 @@
         <th>Price:</th>
         <th>Condition:</th>
         <th>Date Listed:</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -104,7 +108,14 @@
           <td><%= l.name %></td>
           <td><%= l.price %></td>
           <td><%= l.condition %></td>
-          <td><%= l.dateListed %></td>
+          <td><%= l.createdAt.toLocaleDateString() %></td>
+          <td>
+            <% if (user?._id.equals(l.user)) { %>
+              <form action="/listings/<%= l._id %>?_method=DELETE" method="POST">
+                <button type="submit">&#128465;</button>
+              </form>
+            <% } %>
+          </td>
         </tr>
       <% }); %>
     </tbody>

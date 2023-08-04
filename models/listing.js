@@ -21,12 +21,26 @@ const listingSchema = new Schema({
     },
     dateListed: {
         type: Date,
-        default: Date.now
+        default: function() {
+            const currentDate = new Date();
+            const day = currentDate.getDate();
+            const month = currentDate.getMonth() + 1;
+            const year = currentDate.getFullYear().toString().slice(-2);
+            const formattedDate = `${day.toString().padStart(2, '0')}-${month.toString().padStart(2, '0')}-${year}`;
+            return formattedDate;
+        }
     },
     boardgame: {
         type: Schema.Types.ObjectId,
         ref: 'Boardgame'
-    }
+    },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+      },
+      userName: String,
+      userAvatar: String
 }, {
     timestamps: true
 });

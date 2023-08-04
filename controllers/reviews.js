@@ -22,7 +22,28 @@ async function deleteReview(req, res) {
   res.redirect(`/boardgames/${boardgame._id}`);
 }
 
+async function edit(req, res) {
+  const boardgame = await Boardgame.findOne({'reviews._id': req.params.id});
+  const review = boardgame.reviews.id(req.params.id);
+  res.render('boardgames/edit', { review });
+}
+
+async function update(req, res) {
+  const boardgame = await Boardgame.findOne({'reviews._id': req.params.id});
+  const reviewSubdoc = boardgame.reviews.id(req.params.id);
+  if (!reviewSubdoc.userId.equals(req.user._id)) return res.redirect(`/boardgames/${boardgame._id}`);
+  reviewSubdoc.content = req.body.content;
+  try {
+    await boardgame.save();
+  } catch (e) {
+    console.log(e.message);
+  }
+  res.redirect(`/boardgames/${boardgame._id}`);
+}
+
 module.exports = {
     create,
-    delete: deleteReview
+    delete: deleteReview,
+    edit,
+    update
 };

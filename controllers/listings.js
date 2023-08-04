@@ -7,18 +7,23 @@ async function newListing(req, res) {
 }
 
 async function create(req, res) {
-  try {
     req.body.boardgame = req.params.id;
-    const listing = await Listing.create(req.body);
-    console.log("New Listing:", listing);
+    req.body.user = req.user._id;
+    req.body.userName = req.user.name;
+    req.body.userAvatar = req.user.avatar;
+    await Listing.create(req.body);
     res.redirect(`/boardgames/${req.params.id}`);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal Server Error");
-  }
+}
+
+async function deleteListing(req, res) {
+  const listing = await Listing.findOne({ 'listings._id': req.params.id, 'listings.user': req.user._id });
+  if (!listing) return res.redirect('/boardgames');
+  await Listing.remove(req.params.id);
+  res.redirect(`/boardgames/${boardgame._id}`);
 }
 
 module.exports = {
     new: newListing,
-    create
+    create,
+    delete: deleteListing
 };
